@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Krishna: The Thar 4x4 Village Mud Challenge</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- 3D Game Canvas Container -->
+  <div id="game-container"></div>
+
+  <!-- Screen Flash on Hard Impact / Pot Shatter -->
+  <div id="damage-flash"></div>
+
+  <!-- Master HUD Overlay -->
+  <div id="hud">
+    <!-- Top Header: Title & Village Progress Tracker -->
+    <div class="hud-header">
+      <div class="title-pill">
+        <span style="font-size: 1.5rem;">🦚</span>
+        <h1>KRISHNA: THAR 4x4 OFF-ROAD</h1>
+      </div>
+
+      <!-- Village Journey Progress Bar -->
+      <div class="progress-container">
+        <div class="progress-labels">
+          <span>Gokul</span>
+          <span>Barsana</span>
+          <span>Nandgaon</span>
+          <span>Vrindavan</span>
+        </div>
+        <div class="progress-track">
+          <div id="progress-bar-fill"></div>
+        </div>
+      </div>
+
+      <!-- Top Control Buttons -->
+      <div class="top-controls">
+        <button id="mute-btn" class="icon-btn" title="Toggle Sound (M)">🔊</button>
+        <button id="cam-btn" class="icon-btn" title="Change Camera (C)">🎥</button>
+        <button id="reset-btn" class="icon-btn" title="Recover to Road (R)">🔄</button>
+      </div>
+    </div>
+
+    <!-- Center Village Entrance Banner -->
+    <div id="village-banner">
+      <h2>✨ GOKUL (गोकुल) ✨</h2>
+      <p>Lord Krishna sets out on his Thar 4x4 with Sacred Makhan!</p>
+    </div>
+
+    <!-- Instruction / Controls Hint -->
+    <div id="instruction-hint">
+      🎮 Press <b>ENTER</b> or <b>SPACE</b> to start Lord Krishna's journey!
+    </div>
+
+    <!-- Bottom HUD Section -->
+    <div class="hud-bottom">
+      <!-- Left: Speedometer & 4x4 Transmission Mode -->
+      <div class="dash-cluster">
+        <div class="speedo-card">
+          <span id="speed-value" class="val">0</span>
+          <span class="unit">KM/H</span>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <span id="mode-indicator" class="hud-badge mode-4wd">4WD HIGH</span>
+          <span id="mud-depth-indicator" class="hud-badge mud-ok">🌱 FIRM DIRT</span>
+        </div>
+      </div>
+
+      <!-- Center Bottom: Sacred Cargo Challenge ("Don't Drop the Product") -->
+      <div class="cargo-status-card">
+        <div class="cargo-header">
+          <span class="cargo-title">🍯 SACRED MAKHAN POTS</span>
+          <span id="pot-count-text">5 / 5 Pots Safe</span>
+        </div>
+        <div class="pots-rack">
+          <span id="pot-icon-1" class="pot-icon intact" title="Pot 1">🏺</span>
+          <span id="pot-icon-2" class="pot-icon intact" title="Pot 2">🏺</span>
+          <span id="pot-icon-3" class="pot-icon intact" title="Pot 3">🏺</span>
+          <span id="pot-icon-4" class="pot-icon intact" title="Pot 4">🏺</span>
+          <span id="pot-icon-5" class="pot-icon intact" title="Pot 5">🏺</span>
+        </div>
+      </div>
+
+      <!-- Right: Radar Minimap -->
+      <div class="minimap-wrapper">
+        <div class="minimap-title">🧭 VRAJA GPS RADAR</div>
+        <canvas id="minimap-canvas" width="130" height="210"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Touch Controls Overlay for Mobile / Tablets -->
+  <div id="touch-controls">
+    <div class="touch-cluster">
+      <button id="btn-left" class="touch-btn">◀</button>
+      <button id="btn-right" class="touch-btn">▶</button>
+    </div>
+    <div class="touch-cluster">
+      <button id="btn-horn" class="touch-btn">📯</button>
+      <button id="btn-4wd" class="touch-btn">4x4</button>
+      <button id="btn-brake" class="touch-btn">🛑</button>
+      <button id="btn-gas" class="touch-btn">⬆</button>
+    </div>
+  </div>
+
+  <!-- Intro Modal -->
+  <div id="intro-modal" class="modal-overlay">
+    <div class="modal-card">
+      <span style="font-size: 2.5rem; display: inline-block; margin-bottom: 6px;">🦚 🚙 🏺</span>
+      <h2>KRISHNA: THE THAR ODYSSEY</h2>
+      <div class="modal-subtitle">4 Villages • Deep Mud Roads • Large Water Pits</div>
+
+      <div class="modal-desc">
+        Lord Krishna comes out of his ancestral haveli in Gokul and mounts his rugged <b>Mahindra Thar 4x4</b>.<br><br>
+        Loaded in the rear bed are <b>5 Sacred Earthen Makhan Pots (Golden Butter Matkas)</b>. Your mission is to cross 4 villages through treacherous clay mud, deep tractor ruts, and massive water-filled craters <b>without dropping and shattering the pots!</b>
+      </div>
+
+      <div class="modal-villages-list">
+        <div class="village-item"><b>1. Gokul (गोकुल)</b> Starting haveli & calm trails</div>
+        <div class="village-item"><b>2. Barsana (बरसाना)</b> Clay mounds & water crater</div>
+        <div class="village-item"><b>3. Nandgaon (नंदगांव)</b> Dense banyan marsh trench</div>
+        <div class="village-item"><b>4. Vrindavan (वृन्दावन)</b> Grand Mandir destination</div>
+      </div>
+
+      <p style="font-size: 0.88rem; color: #f5b027; margin-bottom: 20px;">
+        💡 <b>Pro Off-Roader Tip:</b> Switch to <b>4WD LOW (G key)</b> when stuck in deep water pits to crawl out safely without violent jerks that break the pots!
+      </p>
+
+      <button id="start-btn" class="primary-btn">BEGIN JOURNEY</button>
+    </div>
+  </div>
+
+  <!-- Game Over Modal -->
+  <div id="gameover-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-card">
+      <span style="font-size: 3rem;">💥 🏺 😢</span>
+      <h2 style="color: #ff4d4d;">ALL MAKHAN POTS SHATTERED!</h2>
+      <div class="modal-subtitle">The rough mud pits took their toll on the cargo</div>
+      <div class="modal-desc" style="border-left-color: #ff4d4d; text-align: center;">
+        Every earthen pot of butter broke on the journey. Drive more smoothly, avoid hitting deep water pits at high speed, and engage 4WD Low when crawling through mud ruts!
+      </div>
+      <button id="restart-btn" class="primary-btn">TRY AGAIN (RESTART)</button>
+    </div>
+  </div>
+
+  <!-- Victory Modal -->
+  <div id="victory-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-card">
+      <span style="font-size: 3rem;">🦚 🚩 🌟 🪔</span>
+      <h2 style="color: #ffd700;">VRINDAVAN REACHED!</h2>
+      <div class="modal-subtitle">Victory! The Sacred Delivery is Complete</div>
+      <div id="victory-score-text" class="modal-desc" style="text-align: center;"></div>
+      <p style="color: #a8e6cf; margin-bottom: 20px;">
+        The gopis and children of Vrindavan rejoice with sweet butter! Lord Krishna honks the Thar horn in celebration!
+      </p>
+      <button id="win-restart-btn" class="primary-btn">DRIVE AGAIN</button>
+    </div>
+  </div>
+
+  <!-- Core Scripts -->
+  <script src="js/three.min.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/terrain.js"></script>
+  <script src="js/villages.js"></script>
+  <script src="js/krishna.js"></script>
+  <script src="js/thar.js"></script>
+  <script src="js/cargo.js"></script>
+  <script src="js/minimap.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

@@ -1,0 +1,532 @@
+/* Krishna: Thar 4x4 Village Mud Challenge - Styling */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Rajdhani:wght@500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #1a120b;
+  font-family: 'Rajdhani', sans-serif;
+  color: #fff;
+}
+
+#game-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Red Flash on Impact / Broken Pot */
+#damage-flash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(255, 30, 30, 0) 40%, rgba(255, 0, 0, 0.45) 100%);
+  opacity: 0;
+  transition: opacity 0.15s ease-out;
+  z-index: 50;
+}
+
+#damage-flash.flash {
+  opacity: 1;
+}
+
+/* Master HUD Overlay */
+#hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+/* Header & Village Progress Bar */
+.hud-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.title-pill {
+  background: rgba(24, 18, 12, 0.85);
+  border: 1.5px solid #d4af37;
+  border-radius: 25px;
+  padding: 8px 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.title-pill h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #f7d070;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+/* Progress Tracker Bar */
+.progress-container {
+  background: rgba(20, 15, 10, 0.85);
+  border: 1px solid #c9933b;
+  border-radius: 12px;
+  padding: 6px 14px;
+  width: 360px;
+}
+
+.progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #e6c88b;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.progress-track {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #f39c12, #e67e22, #00c853);
+  transition: width 0.3s ease;
+}
+
+/* Top Right Audio & Help buttons */
+.top-controls {
+  pointer-events: auto;
+  display: flex;
+  gap: 10px;
+}
+
+.icon-btn {
+  background: rgba(28, 20, 14, 0.85);
+  border: 1.5px solid #d4af37;
+  color: #ffd700;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.icon-btn:hover {
+  transform: scale(1.08);
+  background: #3d2a1b;
+  border-color: #fff;
+}
+
+/* Center Village Entrance Banner */
+#village-banner {
+  position: absolute;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-30px);
+  background: linear-gradient(135deg, rgba(46, 28, 14, 0.95), rgba(77, 38, 15, 0.92));
+  border: 2px solid #ffd700;
+  border-radius: 16px;
+  padding: 14px 34px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 215, 0, 0.3);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#village-banner.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+#village-banner h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  color: #ffd700;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+
+#village-banner p {
+  font-size: 0.95rem;
+  color: #ffeedd;
+  margin-top: 4px;
+}
+
+/* Bottom HUD Section */
+.hud-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+}
+
+/* Left: Speedometer & 4WD Indicator */
+.dash-cluster {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.speedo-card {
+  background: rgba(22, 17, 12, 0.88);
+  border: 2px solid #c9933b;
+  border-radius: 18px;
+  padding: 14px 22px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+}
+
+.speedo-card .val {
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+.speedo-card .unit {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #e6c88b;
+}
+
+/* Badges for 4WD & Mud Depth */
+.hud-badge {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  display: inline-block;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+}
+
+.mode-2wd {
+  background: #34495e;
+  border: 1px solid #7f8c8d;
+  color: #bdc3c7;
+}
+
+.mode-4wd {
+  background: #27ae60;
+  border: 1px solid #2ecc71;
+  color: #fff;
+}
+
+.mode-crawl {
+  background: #d35400;
+  border: 1.5px solid #e67e22;
+  color: #fff;
+  animation: pulseCrawl 1.2s infinite;
+}
+
+@keyframes pulseCrawl {
+  0% { transform: scale(1); box-shadow: 0 0 0 rgba(230, 126, 34, 0.7); }
+  50% { transform: scale(1.03); box-shadow: 0 0 14px rgba(230, 126, 34, 0.9); }
+  100% { transform: scale(1); box-shadow: 0 0 0 rgba(230, 126, 34, 0); }
+}
+
+.mud-ok {
+  background: rgba(39, 174, 96, 0.3);
+  border: 1px solid #27ae60;
+  color: #a8e6cf;
+}
+
+.mud-alert {
+  background: rgba(211, 84, 0, 0.6);
+  border: 1px solid #e67e22;
+  color: #ffbe76;
+}
+
+.water-alert {
+  background: rgba(41, 128, 185, 0.75);
+  border: 1.5px solid #3498db;
+  color: #ffffff;
+  animation: waterPulse 1s infinite;
+}
+
+@keyframes waterPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+/* Center Bottom: Cargo Matka Status ("Don't Drop the Product") */
+.cargo-status-card {
+  background: rgba(25, 18, 12, 0.9);
+  border: 2px solid #ffd700;
+  border-radius: 20px;
+  padding: 12px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.7);
+}
+
+.cargo-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cargo-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffd700;
+  letter-spacing: 1px;
+}
+
+#pot-count-text {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.pots-rack {
+  display: flex;
+  gap: 12px;
+}
+
+.pot-icon {
+  font-size: 1.6rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+  transition: all 0.3s;
+}
+
+.pot-icon.intact {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.pot-icon.broken {
+  opacity: 0.2;
+  filter: grayscale(100%);
+  transform: scale(0.85);
+}
+
+/* Right: Minimap Radar */
+.minimap-wrapper {
+  background: rgba(20, 15, 10, 0.85);
+  border: 2px solid #d4af37;
+  border-radius: 14px;
+  padding: 8px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.minimap-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #ffd700;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+#minimap-canvas {
+  border-radius: 8px;
+  display: block;
+}
+
+/* Touch Controls for Mobile/Tablet */
+#touch-controls {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  display: none; /* Shown on touch screens or small devices */
+  justify-content: space-between;
+  padding: 0 25px;
+  z-index: 30;
+}
+
+@media (max-width: 900px), (hover: none) {
+  #touch-controls { display: flex; }
+}
+
+.touch-cluster {
+  pointer-events: auto;
+  display: flex;
+  gap: 12px;
+}
+
+.touch-btn {
+  background: rgba(40, 30, 20, 0.8);
+  border: 2px solid #d4af37;
+  color: #ffd700;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+
+.touch-btn:active {
+  background: #e67e22;
+  color: #fff;
+  transform: scale(0.92);
+}
+
+/* Instruction Hint */
+#instruction-hint {
+  position: absolute;
+  bottom: 140px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(18, 14, 10, 0.85);
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  border-radius: 20px;
+  padding: 8px 24px;
+  font-size: 0.95rem;
+  color: #ffd700;
+  pointer-events: none;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  transition: opacity 0.5s;
+  text-align: center;
+}
+
+/* Modals (Intro, Game Over, Victory) */
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 7, 5, 0.88);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  padding: 20px;
+}
+
+.modal-card {
+  background: linear-gradient(145deg, #2a1a0f, #19100a);
+  border: 2.5px solid #d4af37;
+  border-radius: 24px;
+  padding: 36px 42px;
+  max-width: 620px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 15px 50px rgba(0,0,0,0.9), 0 0 35px rgba(212, 175, 55, 0.25);
+  color: #fff;
+}
+
+.modal-card h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 2.1rem;
+  color: #ffd700;
+  margin-bottom: 8px;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.9);
+}
+
+.modal-subtitle {
+  font-size: 1.15rem;
+  color: #e6c88b;
+  margin-bottom: 22px;
+  font-weight: 600;
+}
+
+.modal-desc {
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: #ddd;
+  margin-bottom: 24px;
+  text-align: left;
+  background: rgba(0,0,0,0.3);
+  padding: 16px 20px;
+  border-radius: 12px;
+  border-left: 4px solid #ffd700;
+}
+
+.modal-villages-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.village-item {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  font-size: 0.88rem;
+}
+
+.village-item b {
+  color: #ffd700;
+  display: block;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #e67e22, #d35400);
+  border: 2px solid #ffd700;
+  color: #fff;
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  padding: 14px 42px;
+  border-radius: 30px;
+  cursor: pointer;
+  letter-spacing: 1.5px;
+  box-shadow: 0 6px 25px rgba(230, 126, 34, 0.6);
+  transition: all 0.2s ease;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 30px rgba(243, 156, 18, 0.8);
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+}
+
+.primary-btn:active {
+  transform: translateY(1px);
+}

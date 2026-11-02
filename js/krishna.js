@@ -268,10 +268,19 @@ class KrishnaCharacter {
   // Mount Krishna inside the Thar cockpit
   mountInVehicle(vehicleCabinGroup) {
     this.scene.remove(this.group);
-    // Position on right-hand drive (Indian driver side)
-    this.group.position.set(-0.45, 0.25, -0.15);
+    // Right-hand drive (Indian driver seat) positioned naturally behind steering wheel
+    this.group.position.set(-0.46, 0.38, 0.08);
     this.group.rotation.set(0, 0, 0);
-    this.group.scale.set(0.68, 0.68, 0.68);
+    this.group.scale.set(0.48, 0.48, 0.48);
+
+    // Seated posture: bend knees and place hands on steering wheel
+    this.leftLeg.group.rotation.x = -1.35;
+    this.rightLeg.group.rotation.x = -1.35;
+    this.leftArm.group.rotation.x = -0.85;
+    this.rightArm.group.rotation.x = -0.85;
+    this.leftArm.group.rotation.z = 0.35;
+    this.rightArm.group.rotation.z = -0.35;
+
     vehicleCabinGroup.add(this.group);
     this.state = 'IN_CAR';
   }
